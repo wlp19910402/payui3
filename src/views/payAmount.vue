@@ -31,12 +31,16 @@
       </md-field>
     </div>
     <md-field class="section" title="备注">
-      <md-textarea-item
+      <!-- <md-textarea-item
         ref="demo0"
         title="备注一："
         autosize
         placeholder="请输入备注一"
-      />
+      /> -->
+      <md-input-item
+        title="备注一："
+        placeholder="请输入备注一"
+      ></md-input-item>
       <md-input-item
         title="备注二："
         placeholder="请输入备注二"
@@ -175,9 +179,11 @@ export default {
 body {
   background: #f8f8f8;
 }
+
 #app {
   padding-bottom: 0.6rem;
 }
+
 .section {
   margin-bottom: 20px;
   background: #fff;
@@ -221,14 +227,10 @@ body {
       }
 
       .md-activity-indicator-text {
-        font-size: 0.2rem !important;
+        font-size: 0.3rem !important;
       }
     }
   }
-}
-
-.md-popup-mask {
-  // background-color: transparent !important;
 }
 
 textarea {

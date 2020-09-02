@@ -11,8 +11,8 @@ export default new Router({
     name: 'Home',
     component: Home
   }, {
-    path: '/PayAmount',
-    name: 'PayAmount',
+    path: '/payAmount',
+    name: 'payAmount',
     component: PayAmount
   }]
 })
