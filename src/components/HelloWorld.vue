@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
-    <h1><span>{{ msg }}</span></h1>
+    <h1>
+      <span>{{ msg }}</span>
+    </h1>
     <p>
       A mobile UI toolkit, based on Vue.js 2, designed for financial scenarios.
     </p>
-    <br/>
+    <br />
     <md-button type="primary" @click="greet">Click Me</md-button>
   </div>
 </template>
@@ -15,16 +17,22 @@ import { Button, Toast } from "mand-mobile";
 export default {
   name: "HelloWorld",
   components: {
-    "md-button": Button
+    "md-button": Button,
   },
   props: {
-    msg: String
+    msg: String,
   },
   methods: {
     greet() {
-      Toast.info("I'm Batman!");
-    }
-  }
+      // Toast.info("I'm Batman!");
+      var that = this;
+      // setTimeout(function () {
+      this.$router.replace("/payAmount");
+      console.log(this.$router);
+      // this.$router.push("/payAmount");
+      // }, 1000);
+    },
+  },
 };
 </script>
 

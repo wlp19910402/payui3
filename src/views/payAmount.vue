@@ -166,6 +166,7 @@ export default {
     },
     onBasicConfirm() {
       this.showPopUp("center");
+      this.$router.push("/");
       this.basicDialog.open = false;
     },
     onBasicCancel() {

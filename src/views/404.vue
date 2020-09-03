@@ -1,13 +1,13 @@
 <template>
   <main id="home" class="view" role="main">
     <div class="heading">
-      <h1><span>Mand Mobile</span></h1>
+      <h1><span>404</span></h1>
       <p>
-        一个基于Vue的移动端UI组件库，丰富、灵活、实用，快速搭建优质的金融类产品，让复杂的金融场景变简单。
+        404
       </p>
     </div>
 
-    <md-button @click="handleClick">确认支付</md-button>
+    <md-button @click="handleClick">返回</md-button>
   </main>
 </template>
 
