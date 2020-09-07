@@ -3,14 +3,23 @@ const poststylus = require('poststylus')
 const pxtorem = require('postcss-pxtorem')
 process.env.VUE_APP_VERSION = require('./package.json').version
 console.log(process.env.VUE_APP_VERSION)
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const resolve = file => path.resolve(__dirname, file)
 module.exports = {
-  // configureWebpack: {
-  //   output: {
-  //     libraryExport: 'default'
-  //   }
-  // },
+  configureWebpack: {
+    plugins: [
+      new CopyWebpackPlugin({
+        patterns: [{
+          from: "./static",
+          to: 'static'
+        }]
+      })
+    ]
+    // output: {
+    //   libraryExport: 'default'
+    // }
+  },
   css: {
     loaderOptions: {
       stylus: {

@@ -32,25 +32,20 @@
         </md-input-item>
       </md-field>
     </div>
-    <md-field class="section" title="备注">
-      <!-- <md-textarea-item
-        ref="demo0"
-        title="备注一："
-        autosize
-        placeholder="请输入备注一"
-      /> -->
-      <md-input-item
-        title="备注一："
-        placeholder="请输入备注一"
-      ></md-input-item>
-      <md-input-item
-        title="备注二："
-        placeholder="请输入备注二"
-      ></md-input-item>
-      <md-input-item
-        title="备注三："
-        placeholder="请输入备注三"
-      ></md-input-item>
+    <md-field class="section" title="必填" v-if="formData.length > 0">
+      <div v-for="item in formData" :key="item.id">
+        <md-input-item
+          v-if="item.type === 'input'"
+          :title="item.label"
+          :placeholder="item.placeholder"
+          :id="item.id"
+          :name="item.name"
+          left
+        ></md-input-item>
+        <div v-if="item.type === 'select'">
+          <qm-selector :selectorData="item"></qm-selector>
+        </div>
+      </div>
     </md-field>
 
     <md-action-bar :actions="actionBarData"> </md-action-bar>
@@ -99,9 +94,10 @@ import {
   ActivityIndicator,
   Popup,
   PopupTitleBar,
-  TextareaItem,
 } from "mand-mobile";
 import logo from "@/assets/images/logo-vertial.png";
+import formData from "./../../static/beizhu.json";
+import QmSelector from "@/components/form/QmSelector";
 export default {
   name: "app",
   data() {
@@ -109,6 +105,7 @@ export default {
       value: "",
       isPopupShow: {},
       logo,
+      formData,
       actionBarData: [
         {
           text: "确认支付",
@@ -152,7 +149,7 @@ export default {
     [Popup.name]: Popup,
     [PopupTitleBar.name]: PopupTitleBar,
     [Dialog.name]: Dialog,
-    [TextareaItem.name]: TextareaItem,
+    QmSelector,
   },
   methods: {
     showBasicDialog() {
@@ -257,5 +254,9 @@ body {
 
 textarea {
   padding-top: 0 !important;
+}
+
+.md-field-item.is-solid .md-field-item-title {
+  text-align: left;
 }
 </style>
