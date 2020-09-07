@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/views/home'
 import PayAmount from '@/views/payAmount'
 import NotFount from '@/views/404'
+import Test from '@/views/test'
 Vue.use(Router)
 export default new Router({
   mode: "history",
@@ -15,6 +16,10 @@ export default new Router({
     path: '/payAmount',
     name: 'payAmount',
     component: PayAmount
+  }, {
+    path: '/test',
+    name: 'test',
+    component: Test
   }, {
     path: '*',
     name: '404',

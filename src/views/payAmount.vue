@@ -11,12 +11,13 @@
     <div class="md-example-child md-example-child-input-item-3 section">
       <md-field title="支付金额(元)">
         <md-input-item
+          ref="input10"
           v-model="value"
-          class="qm-input-large-text"
+          :class="'qm-input-large-text'"
           type="money"
           placeholder="0.00"
           :size="size"
-          is-amount
+          :is-amount="true"
           maxlength="9"
           is-formative
           align="center"
@@ -26,6 +27,7 @@
           precision="2"
           clearable
           brief="支付金额不能超过10万"
+          :error="moneyErrorInfo"
         >
         </md-input-item>
       </md-field>
@@ -111,6 +113,7 @@ export default {
         {
           text: "确认支付",
           onClick: this.showBasicDialog,
+          disabled: true,
         },
       ],
       basicDialog: {
@@ -131,6 +134,9 @@ export default {
   computed: {
     size() {
       return this.value.length > 9 ? "small" : "large";
+    },
+    moneyErrorInfo() {
+      return parseFloat(this.value) > 100000 ? "支付金额不能超过10万" : "";
     },
   },
   components: {
@@ -153,13 +159,28 @@ export default {
       this.basicDialog.open = true;
     },
     confirmMoney(name, value) {
-      console.log(name, value, "%%%%");
+      console.log(name, value);
     },
     moneyFormate(name, value) {
-      this.value = value;
-      // if (this.value === 88) {
-      // }
-      console.log(name, value);
+      let money = value;
+      if (value === ".") {
+        money = "0.";
+      }
+      let arrTmp = money.split(".");
+      if (arrTmp.length === 2) {
+        if (arrTmp[1].length > 2) {
+          arrTmp[1] = arrTmp[1].slice(0, 2);
+          money = arrTmp[0] + "." + arrTmp[1];
+        }
+      }
+      this.$nextTick(() => {
+        this.value = money;
+        if (parseFloat(this.value) > 0 && parseFloat(this.value) < 100000) {
+          this.actionBarData[0].disabled = false;
+        } else {
+          this.actionBarData[0].disabled = true;
+        }
+      });
     },
     showPopUp(type) {
       this.$set(this.isPopupShow, type, true);

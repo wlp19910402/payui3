@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { Button, Toast } from "mand-mobile";
+import { Button } from "mand-mobile";
 
 export default {
   name: "HelloWorld",
@@ -25,7 +25,6 @@ export default {
   methods: {
     greet() {
       // Toast.info("I'm Batman!");
-      var that = this;
       // setTimeout(function () {
       this.$router.replace("/payAmount");
       console.log(this.$router);

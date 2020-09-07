@@ -1,12 +1,8 @@
 <template>
   <main id="home" class="view" role="main">
     <div class="heading">
-      <h1><span>404</span></h1>
-      <p>
-        404
-      </p>
+      <p>404</p>
     </div>
-
     <md-button @click="handleClick">返回</md-button>
   </main>
 </template>
