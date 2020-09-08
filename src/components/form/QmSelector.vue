@@ -37,7 +37,6 @@ export default {
     },
   },
   data: () => ({
-    // selectorData:
     selectorValue: "",
     isSelectorShow: false,
   }),

@@ -10,12 +10,12 @@ export default new Router({
   base: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_SRC : '/',
   routes: [{
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'PayAmount',
+    component: PayAmount
   }, {
     path: '/payAmount',
-    name: 'payAmount',
-    component: PayAmount
+    name: 'Home',
+    component: Home
   }, {
     path: '/test',
     name: 'test',

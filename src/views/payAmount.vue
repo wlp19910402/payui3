@@ -96,8 +96,9 @@ import {
   PopupTitleBar,
 } from "mand-mobile";
 import logo from "@/assets/images/logo-vertial.png";
-import formData from "./../../static/beizhu.json";
+// import formData from "./../../static/beizhu.json";
 import QmSelector from "@/components/form/QmSelector";
+import axios from "axios";
 export default {
   name: "app",
   data() {
@@ -105,7 +106,7 @@ export default {
       value: "",
       isPopupShow: {},
       logo,
-      formData,
+      formData: [],
       actionBarData: [
         {
           text: "确认支付",
@@ -127,6 +128,17 @@ export default {
         ],
       },
     };
+  },
+  async created() {
+    await axios.get("/static/formNote.json").then((res) => {
+      console.log(res.data);
+      let result = res.data;
+      if (result.status === "0") {
+        this.formData = result.formList;
+      } else {
+        console.log("获取数据失败", result.msg);
+      }
+    });
   },
   computed: {
     size() {
@@ -184,7 +196,10 @@ export default {
     },
     onBasicConfirm() {
       this.showPopUp("center");
-      this.$router.push("/");
+      // this.$router.push("/");
+      axios.get("http://127.0.0.1:8080/getUser").then((res) => {
+        console.log(res.data);
+      });
       this.basicDialog.open = false;
     },
     onBasicCancel() {
