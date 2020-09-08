@@ -7,6 +7,19 @@ const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const resolve = file => path.resolve(__dirname, file)
 module.exports = {
+  devServer: {
+    proxy: 'http://127.0.0.1:8080'
+    // proxy: {
+    //   '/': {
+    //     target: 'http://127.0.0.1:8080/',
+    //     ws: true,
+    //     changeOrigin: true
+    //   },
+    //   '/foo': {
+    //     target: '<other_url>'
+    //   }
+    // }
+  },
   configureWebpack: {
     plugins: [
       new CopyWebpackPlugin({
@@ -56,4 +69,5 @@ module.exports = {
   //注：在本地一定要用 '/'，否则二级路由刷新找不到js路径
   //IS_PROD是判断是否为现上环境，可自行配置，process.env.VUE_APP_SRC为线上环境的某个路径。
   publicPath: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_SRC : '/',
+
 }

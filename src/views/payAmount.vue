@@ -12,13 +12,13 @@
       <md-field title="支付金额(元)">
         <md-input-item
           ref="input10"
-          v-model="value"
+          v-model="moneyVal"
           :class="'qm-input-large-text'"
           type="money"
           placeholder="0.00"
           :size="size"
           :is-amount="true"
-          maxlength="9"
+          maxlength="12"
           is-formative
           align="center"
           @change="moneyFormate"
@@ -26,7 +26,7 @@
           is-virtual-keyboard
           precision="2"
           clearable
-          brief="支付金额不能超过10万"
+          brief="支付金额长度不能超过12位"
           :error="moneyErrorInfo"
         >
         </md-input-item>
@@ -47,15 +47,15 @@
         </div>
       </div>
     </md-field>
-
-    <md-action-bar :actions="actionBarData"> </md-action-bar>
+    <md-action-bar class="qm-action-bar-bg" :actions="actionBarData">
+    </md-action-bar>
     <md-dialog
       title="确认金额"
       :closable="true"
       v-model="basicDialog.open"
       :btns="basicDialog.btns"
     >
-      确定提交支付￥{{ value }}元吗，点击确认则跳转第三方支付系统
+      确定提交支付￥{{ moneyVal }}元吗，点击确认则跳转第三方支付系统
     </md-dialog>
     <div class="md-example-child">
       <md-popup v-model="isPopupShow.center">
@@ -94,16 +94,16 @@ import {
   ActivityIndicator,
   Popup,
   PopupTitleBar,
+  Toast,
 } from "mand-mobile";
 import logo from "@/assets/images/logo-vertial.png";
-// import formData from "./../../static/beizhu.json";
 import QmSelector from "@/components/form/QmSelector";
 import axios from "axios";
 export default {
   name: "app",
   data() {
     return {
-      value: "",
+      moneyVal: "",
       isPopupShow: {},
       logo,
       formData: [],
@@ -142,10 +142,12 @@ export default {
   },
   computed: {
     size() {
-      return this.value.length > 9 ? "small" : "large";
+      return this.moneyVal.length > 9 ? "small" : "large";
     },
     moneyErrorInfo() {
-      return parseFloat(this.value) > 100000 ? "支付金额不能超过10万" : "";
+      return parseFloat(this.moneyVal) > 1000000000
+        ? "支付金额不能超过10万"
+        : "";
     },
   },
   components: {
@@ -183,8 +185,8 @@ export default {
         }
       }
       this.$nextTick(() => {
-        this.value = money;
-        if (parseFloat(this.value) > 0 && parseFloat(this.value) < 100000) {
+        this.moneyVal = money;
+        if (parseFloat(this.moneyVal) > 0) {
           this.actionBarData[0].disabled = false;
         } else {
           this.actionBarData[0].disabled = true;
@@ -194,12 +196,33 @@ export default {
     showPopUp(type) {
       this.$set(this.isPopupShow, type, true);
     },
+    hidePopUp(type) {
+      this.$set(this.isPopupShow, type, false);
+    },
     onBasicConfirm() {
       this.showPopUp("center");
-      // this.$router.push("/");
-      axios.get("http://127.0.0.1:8080/getUser").then((res) => {
-        console.log(res.data);
-      });
+      axios
+        .post("/scenefront/tran/paymentquery", {
+          merId: this.$route.params.merId,
+          termId: this.$route.params.termId,
+          tranAmt: this.moneyVal,
+        })
+        .then((res) => {
+          this.hidePopUp("center");
+          let responseResult = res.data;
+          if (responseResult.code === "success") {
+            Toast.info("请求成功，正在跳转支付页面");
+            setTimeout(() => {
+              window.location.replace(responseResult.qrCode);
+            }, 1000);
+          } else {
+            Toast.info("请求失败，请重试");
+          }
+        })
+        .catch((err) => {
+          Toast.info("请求支付失败");
+          console.log(err);
+        });
       this.basicDialog.open = false;
     },
     onBasicCancel() {
@@ -211,6 +234,10 @@ export default {
 
 <style lang="stylus">
 body {
+  background: #f8f8f8;
+}
+
+.qm-action-bar-bg {
   background: #f8f8f8;
 }
 
