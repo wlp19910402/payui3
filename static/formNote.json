@@ -6,15 +6,15 @@
     "label": "机构号",
     "placeholder": "请输入机构号",
     "id": "1",
-    "name": "orgId",
+    "name": "aagag",
     "value": ""
   }, {
     "type": "select",
     "label": "证件类型",
     "placeholder": "请选择证件类型",
     "id": "2",
-    "name": "cardStatus",
-    "value": "",
+    "name": "remark2",
+    "value": "1",
     "option": [{
         "value": "1",
         "text": "身份证"
@@ -32,7 +32,7 @@
     "label": "证件号",
     "placeholder": "请输入证件号",
     "id": "3",
-    "name": "cardId",
+    "name": "remark3",
     "value": ""
   }]
 }
