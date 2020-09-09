@@ -10,7 +10,7 @@
     />
     <md-selector
       v-model="isSelectorShow"
-      default-value="1"
+      :default-value="selectorData.value"
       :data="selectorData.option"
       max-height="320px"
       :title="selectorData.label"
@@ -33,6 +33,7 @@ export default {
       type: Object,
       defalut: () => ({
         label: "选择器",
+        option: [],
       }),
     },
   },
@@ -42,7 +43,13 @@ export default {
   }),
   mounted() {
     this.$nextTick(() => {
-      this.selectorValue = this.selectorData.option[0].text;
+      if (this.selectorData.option.length > 0) {
+        this.selectorData.option.forEach((item) => {
+          if (item.value === this.selectorData.value) {
+            this.selectorValue = item.text;
+          }
+        });
+      }
     });
   },
   methods: {
