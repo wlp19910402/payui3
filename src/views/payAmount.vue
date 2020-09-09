@@ -249,8 +249,8 @@ export default {
           this.isloadingShow = false;
           let responseResult = res.data;
           if (responseResult.code === "success") {
-            // Toast.info("请求成功，正在跳转支付页面");
-            Toast.info(responseResult.msg);
+            Toast.info("请求成功，正在跳转支付页面");
+            // Toast.info(responseResult.msg);
             setTimeout(() => {
               window.location = responseResult.qrCode;
             }, 1000);
