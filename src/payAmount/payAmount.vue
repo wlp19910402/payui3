@@ -203,8 +203,8 @@ export default {
       this.showPopUp("center");
       axios
         .post("/scenefront/tran/paymentquery", {
-          merId: this.$route.params.merId,
-          termId: this.$route.params.termId,
+          merId: this.$route.query.merId,
+          termId: this.$route.query.termId,
           tranAmt: this.moneyVal,
         })
         .then((res) => {
@@ -255,9 +255,10 @@ body {
 }
 
 .qm-logo {
-  margin: 0.2rem 0;
+  margin: 0.2rem auto;
   width: 2.4rem;
   height: auto;
+  display: block;
 }
 
 .qm-input-large-text.md-input-item .md-input-item-control .md-input-item-fake {

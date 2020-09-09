@@ -8,17 +8,21 @@ const CopyWebpackPlugin = require("copy-webpack-plugin")
 const resolve = file => path.resolve(__dirname, file)
 module.exports = {
   devServer: {
-    proxy: 'http://127.0.0.1:8080'
-    // proxy: {
-    //   '/': {
-    //     target: 'http://127.0.0.1:8080/',
-    //     ws: true,
-    //     changeOrigin: true
-    //   },
-    //   '/foo': {
-    //     target: '<other_url>'
-    //   }
-    // }
+    proxy: 'http://127.0.0.1:8080',
+  },
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+    },
+    waitPayResult: {
+      entry: 'src/waitPayResult/waitPayResult.mian.js',
+      filename: './waitPayResult/index.html'
+    },
+    payAmount: {
+      entry: 'src/payAmount/payAmount.mian.js',
+      filename: './payAmount/index.html'
+    }
   },
   configureWebpack: {
     plugins: [
@@ -29,9 +33,6 @@ module.exports = {
         }]
       })
     ]
-    // output: {
-    //   libraryExport: 'default'
-    // }
   },
   css: {
     loaderOptions: {
