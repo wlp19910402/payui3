@@ -8,13 +8,19 @@ export default new Router({
   mode: "history",
   base: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_SRC : '/',
   routes: [{
-    path: '/:merId/:termId/payAmount',
+    path: '/',
     name: 'PayAmount',
-    component: PayAmount
+    component: PayAmount,
+    props: (route) => ({
+      query: [route.query.merId, route.query.termId]
+    })
   }, {
-    path: '/:merId/:termId/order/waitPayResult/:orderId',
+    path: '/waitPayResult',
     name: 'WaitPayResult',
-    component: WaitPayResult
+    component: WaitPayResult,
+    props: (route) => ({
+      query: [route.query.merId, route.query.termId, route.query.orderId]
+    })
   }, {
     path: '*',
     name: '404',

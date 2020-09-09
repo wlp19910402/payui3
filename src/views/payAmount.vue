@@ -146,7 +146,7 @@ export default {
     },
     moneyErrorInfo() {
       return parseFloat(this.moneyVal) > 1000000000
-        ? "支付金额不能超过10万"
+        ? "支付金额不能超过10亿"
         : "";
     },
   },
@@ -177,6 +177,7 @@ export default {
       if (value === ".") {
         money = "0.";
       }
+      money = parseFloat(money).toString();
       let arrTmp = money.split(".");
       if (arrTmp.length === 2) {
         if (arrTmp[1].length > 2) {
@@ -203,8 +204,8 @@ export default {
       this.showPopUp("center");
       axios
         .post("/scenefront/tran/paymentquery", {
-          merId: this.$route.params.merId,
-          termId: this.$route.params.termId,
+          merId: this.$route.query.merId,
+          termId: this.$route.query.termId,
           tranAmt: this.moneyVal,
         })
         .then((res) => {

@@ -24,4 +24,4 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-http://localhost:8081/999999999992/8888888888888/payAmount
+http://localhost:8081/?merId=2222222&termId=222222222
