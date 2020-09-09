@@ -146,7 +146,7 @@ export default {
     },
     moneyErrorInfo() {
       return parseFloat(this.moneyVal) > 1000000000
-        ? "支付金额不能超过10万"
+        ? "支付金额不能超过10亿"
         : "";
     },
   },
@@ -177,6 +177,7 @@ export default {
       if (value === ".") {
         money = "0.";
       }
+      money = parseFloat(money).toString();
       let arrTmp = money.split(".");
       if (arrTmp.length === 2) {
         if (arrTmp[1].length > 2) {
@@ -186,7 +187,7 @@ export default {
       }
       this.$nextTick(() => {
         this.moneyVal = money;
-        if (parseFloat(this.moneyVal) > 0) {
+        if (parseFloat(this.moneyVal) > 0&& parseFloat(this.moneyVal)<1000000000) {
           this.actionBarData[0].disabled = false;
         } else {
           this.actionBarData[0].disabled = true;

@@ -17,7 +17,10 @@ export default new Router({
   {
     path: '/payAmount',
     name: 'PayAmount',
-    component: PayAmount
+    component: PayAmount,
+    props: (route) => ({
+      query: [route.query.merId, route.query.termId]
+    })
   }, {
     path: '*',
     name: '404',
@@ -26,6 +29,9 @@ export default new Router({
 {
     path: '/waitPayResult',
     name: 'waitPayResult',
-    component: WaitPayResult
+    component: WaitPayResult,
+    props: (route) => ({
+      query: [route.query.merId, route.query.termId, route.query.orderId]
+    })
   }, ]
 })

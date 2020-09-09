@@ -34,10 +34,10 @@ export default {
     console.log(process.env.baseUrl);
   },
   methods: {
-    toPaAmount() {
-      window.location =
-        "http://localhost:8081/payAmount?merId=827276616161&termId=27277882222";
-    },
+    // toPaAmount() {
+    //   window.location =
+    //     "http://localhost:8081/payAmount?merId=827276616161&termId=27277882222";
+    // },
   },
 };
 </script>
