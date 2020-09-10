@@ -20,9 +20,6 @@ module.exports = {
         }]
       })
     ]
-    // output: {
-    //   libraryExport: 'default'
-    // }
   },
   css: {
     loaderOptions: {
