@@ -22,7 +22,6 @@
           is-formative
           align="center"
           @change="moneyFormate"
-          @confirm="confirmMoney"
           is-virtual-keyboard
           precision="2"
           clearable
@@ -32,7 +31,7 @@
         </md-input-item>
       </md-field>
     </div>
-    <md-field class="section" title="必填" v-if="formData.length > 0">
+    <md-field class="section" title="选填" v-if="formData.length > 0">
       <div v-for="item in formData" :key="item.id">
         <md-input-item
           v-if="item.type === 'input'"
@@ -41,6 +40,7 @@
           :id="item.id"
           :name="item.name"
           :value="item.value"
+          maxlength="255"
           left
         ></md-input-item>
         <div v-if="item.type === 'select'">
@@ -97,6 +97,7 @@ import {
   PopupTitleBar,
   Toast,
 } from "mand-mobile";
+import "@/assets/styl/payAmount.styl";
 import logo from "@/assets/images/logo-vertial.png";
 import QmSelector from "@/components/form/QmSelector";
 import axios from "axios";
@@ -136,17 +137,6 @@ export default {
       },
     };
   },
-  async created() {
-    //获取static中的form表单的数据，备注一，备注二，备注三
-    await axios.get("/static/formNote.json").then((res) => {
-      let result = res.data;
-      if (result.status === "0") {
-        this.formData = result.formList;
-      } else {
-        console.log("获取数据失败", result.msg);
-      }
-    });
-  },
   computed: {
     //当输入的金额数字长度大于9时，将字体大小切换成小的
     size() {
@@ -174,13 +164,39 @@ export default {
     [Dialog.name]: Dialog,
     QmSelector,
   },
+  async created() {
+    //获取static中的form表单的数据，备注一，备注二，备注三
+    await axios
+      .get("/static/formNote.json")
+      .then((res) => {
+        let result = res.data;
+        if (result.status === "0") {
+          this.formData = result.formList;
+          for (let i = 0; i < this.formData.length; i++) {
+            //判断url路径是否有备注名字的参数，如果有参数的名字这些值
+            let tmpRemark = this.$route.query["remark" + (i + 1)];
+            if (tmpRemark) {
+              this.formData[i].label = tmpRemark;
+              this.formData[i].placeholder = "请输入" + tmpRemark;
+            }
+          }
+          this.formData.forEach((item) => {
+            item.name;
+          });
+        } else {
+          console.log("获取数据失败", result.msg);
+        }
+      })
+      .catch((err) => {
+        //关闭loading
+        Toast.info("请求表单失败，请重试");
+        console.log(err);
+      });
+  },
   methods: {
     //显示确认支付的弹出框
     showBasicDialog() {
       this.basicDialog.open = true;
-    },
-    confirmMoney(name, value) {
-      console.log(name, value);
     },
     //输入金额的格式进行转换成标准的格式化。xxxxxxx.xx 小数点只支持到2位
     moneyFormate(name, value) {
@@ -271,74 +287,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scope>
-body {
-  background: #f8f8f8 !important;
-}
-
-.qm-action-bar-bg {
-  background: #f8f8f8;
-}
-
-#app {
-  padding-bottom: 0.6rem;
-}
-
-.section {
-  margin-bottom: 20px;
-  background: #fff;
-}
-
-.action-bar .md-tag {
-  margin-left: 5px;
-}
-
-.qm-logo {
-  margin: 0.2rem 0;
-  width: 2.4rem;
-  height: auto;
-}
-
-.qm-input-large-text.md-input-item .md-input-item-control .md-input-item-fake {
-  font-size: 0.48rem !important;
-}
-
-.md-example-child-md-activity-indicator-1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .md-activity-indicator {
-    margin-bottom: 30px;
-  }
-
-  .activity-indicator-container {
-    margin-bottom: 30px;
-    padding: 0.4rem;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 4px;
-
-    .md-activity-indicator-css {
-      margin-bottom: 0;
-
-      .md-activity-indicator-svg {
-        width: 0.72rem !important;
-        height: 0.72rem !important;
-      }
-
-      .md-activity-indicator-text {
-        font-size: 0.3rem !important;
-      }
-    }
-  }
-}
-
-textarea {
-  padding-top: 0 !important;
-}
-
-.md-field-item.is-solid .md-field-item-title {
-  text-align: left;
-}
-</style>

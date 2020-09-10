@@ -1,0 +1,38 @@
+{
+  "status": "0",
+  "msg": "",
+  "formList": [{
+    "type": "input",
+    "label": "机构号",
+    "placeholder": "请输入机构号",
+    "id": "1",
+    "name": "remark1",
+    "value": ""
+  }, {
+    "type": "select",
+    "label": "证件类型",
+    "placeholder": "请选择证件类型",
+    "id": "2",
+    "name": "remark2",
+    "value": "1",
+    "option": [{
+        "value": "1",
+        "text": "身份证"
+      },
+      {
+        "value": "2",
+        "text": "护照"
+      }, {
+        "value": "3",
+        "text": "军人证"
+      }
+    ]
+  }, {
+    "type": "input",
+    "label": "证件号",
+    "placeholder": "请输入证件号",
+    "id": "3",
+    "name": "remark3",
+    "value": ""
+  }]
+}
