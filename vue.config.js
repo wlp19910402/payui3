@@ -10,16 +10,6 @@ module.exports = {
   devServer: {
     proxy: 'http://127.0.0.1:8989'
     // proxy: 'http://127.0.0.1:8080'
-    // proxy: {
-    //   '/': {
-    //     target: 'http://127.0.0.1:8080/',
-    //     ws: true,
-    //     changeOrigin: true
-    //   },
-    //   '/foo': {
-    //     target: '<other_url>'
-    //   }
-    // }
   },
   configureWebpack: {
     plugins: [

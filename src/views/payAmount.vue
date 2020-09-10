@@ -248,20 +248,20 @@ export default {
           //关闭loading
           this.isloadingShow = false;
           let responseResult = res.data;
-          if (responseResult.code === "success") {
-            Toast.info("请求成功，正在跳转支付页面");
+          if (responseResult.code === "000000") {
+            // Toast.info("请求成功，正在跳转支付页面");
             // Toast.info(responseResult.msg);
-            setTimeout(() => {
-              window.location = responseResult.qrCode;
-            }, 1000);
+            // setTimeout(() => {
+            window.location = responseResult.qrCode;
+            // }, 1000);
           } else {
-            Toast.info("请求失败，请重试");
+            Toast.info(responseResult.msg);
           }
         })
         .catch((err) => {
           //关闭loading
           this.isloadingShow = false;
-          Toast.info("请求支付失败");
+          Toast.info("请求支付失败，请重试");
           console.log(err);
         });
     },
