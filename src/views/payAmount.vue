@@ -271,7 +271,7 @@ export default {
             window.location = responseResult.qrCode;
             // }, 1000);
           } else {
-            Toast.info(responseResult.msg);
+            Toast.info(responseResult.msg || "提交支付失败");
           }
         })
         .catch((err) => {

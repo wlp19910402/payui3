@@ -2,11 +2,10 @@
   <main class="view" role="main">
     <div class="qm-model-center">
       <div
-        class="qm-pay-result"
+        :class="'qm-pay-result ' + resultList.icon"
         :style="{ borderColor: resultList.color }"
         v-if="requestResultStatus !== PAY_RESULT_STATUS.PAY_WAIT"
       >
-        <md-icon :color="resultList.color" :name="resultList.icon"></md-icon>
       </div>
       <div
         v-if="requestResultStatus === PAY_RESULT_STATUS.PAY_WAIT"
@@ -51,14 +50,14 @@ export default {
             title: "支付成功",
             msg: "订单支付成功",
             color: "green",
-            icon: "right",
+            icon: "qm-succuss-result",
           }
         : this.requestResultStatus === PAY_RESULT_STATUS.PAY_FAIL
         ? {
             title: "支付失败",
             msg: "订单支付失败",
             color: "#b50029",
-            icon: "wrong",
+            icon: "qm-err-result",
           }
         : this.requestResultStatus === PAY_RESULT_STATUS.PAY_WAIT
         ? {
@@ -69,7 +68,7 @@ export default {
             title: "获取支付结果失败",
             msg: "获取支付结果失败，请稍后从订单详情中查看",
             color: "#b50029",
-            icon: "wrong",
+            icon: "qm-err-result",
           };
     },
   },
@@ -85,7 +84,7 @@ export default {
     //提交支付金额备注等信息去支付页面
     async fetchRequestPayResult() {
       axios
-        .post("/tran/applyqrcode", {
+        .post("/tran/paymentquery", {
           merId: this.$route.query.merId,
           termId: this.$route.query.termId,
           oldLocalOrderNo: this.$route.query.oldLocalOrderNo,
@@ -100,7 +99,6 @@ export default {
             this.msg = this.resultList.msg;
           } else {
             this.requestResultStatus = PAY_RESULT_STATUS.PAY_FAIL;
-            // Toast.info(responseResult.msg);
             this.msg = responseResult.msg || this.resultList.msg;
           }
         })
@@ -142,7 +140,59 @@ body {
   text-align: center;
   color: #ee8f51;
 }
-
+.qm-err-result {
+  transform: rotate(-45deg);
+}
+.qm-err-result::before {
+  content: "";
+  width: 0.14rem;
+  height: 1rem;
+  position: absolute;
+  border-radius: 0.3rem;
+  /* top: 0.3rem; */
+  margin-left: -0.57rem;
+  margin-top: 0.8rem;
+  background: #b50029;
+  transform: rotate(-90deg);
+  transform-origin: top center;
+}
+.qm-err-result::after {
+  content: "";
+  width: 0.14rem;
+  height: 1rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.3rem;
+  background: #b50029;
+  transform-origin: center center;
+}
+.qm-succuss-result::before {
+  content: "";
+  width: 0.14rem;
+  height: 0.6rem;
+  position: absolute;
+  border-radius: 0.3rem;
+  /* top: 0.3rem; */
+  margin-left: -0.57rem;
+  margin-top: 0.8rem;
+  background: green;
+  transform: rotate(-45deg);
+  transform-origin: top center;
+}
+.qm-succuss-result::after {
+  content: "";
+  width: 0.14rem;
+  height: 1rem;
+  position: absolute;
+  left: 0.58rem;
+  margin-top: 0.24rem;
+  transform: rotate(45deg);
+  border-radius: 0.3rem;
+  background: green;
+  transform-origin: bottom center;
+}
 .qm-wait-loading-box {
   margin: 0 auto;
   width: 1.6rem;
