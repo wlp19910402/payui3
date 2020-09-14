@@ -25,16 +25,19 @@
 
 <script>
 import { Button, ResultPage, Icon } from "mand-mobile";
+import axios from "axios";
 const PAY_RESULT_STATUS = {
   PAY_WAIT: "2",
   PAY_SUCCESS: "1",
   PAY_FAIL: "0",
+  PAY_RESULT_ERROR: "3",
 };
 export default {
   name: "WaitPayResult",
   data: () => ({
     requestResultStatus: PAY_RESULT_STATUS.PAY_WAIT,
     PAY_RESULT_STATUS,
+    msg: "",
   }),
   components: {
     [Button.name]: Button,
@@ -46,21 +49,21 @@ export default {
       return this.requestResultStatus === PAY_RESULT_STATUS.PAY_SUCCESS
         ? {
             title: "支付成功",
-            msg: "支付成功的表述,订单提交成功，商户已经准备商品",
+            msg: "订单支付成功",
             color: "green",
             icon: "right",
           }
         : this.requestResultStatus === PAY_RESULT_STATUS.PAY_FAIL
         ? {
             title: "支付失败",
-            msg: "支付失败的表述",
+            msg: "订单支付失败",
             color: "#b50029",
             icon: "wrong",
           }
         : this.requestResultStatus === PAY_RESULT_STATUS.PAY_WAIT
         ? {
             title: "等待支付结果",
-            msg: "等待支付结果的表述",
+            msg: "正在查询支付结果",
           }
         : {
             title: "获取支付结果失败",
@@ -70,14 +73,46 @@ export default {
           };
     },
   },
+  created() {
+    this.fetchRequestPayResult();
+  },
   mounted() {
     this.$nextTick(() => {
-      setTimeout(() => {
-        this.requestResultStatus = PAY_RESULT_STATUS.PAY_SUCCESS;
-      }, 4000);
+      setTimeout(() => {}, 4000);
     });
   },
-  methods: {},
+  methods: {
+    //提交支付金额备注等信息去支付页面
+    async fetchRequestPayResult() {
+      axios
+        .post("/tran/applyqrcode", {
+          merId: this.$route.query.merId,
+          termId: this.$route.query.termId,
+          oldLocalOrderNo: this.$route.query.oldLocalOrderNo,
+          qrCode: this.$route.query.qrCode || null,
+        })
+        .then((res) => {
+          //关闭loading
+          this.isloadingShow = false;
+          let responseResult = res.data;
+          if (responseResult.code === "000000") {
+            this.requestResultStatus = PAY_RESULT_STATUS.PAY_SUCCESS;
+            this.msg = this.resultList.msg;
+          } else {
+            this.requestResultStatus = PAY_RESULT_STATUS.PAY_FAIL;
+            // Toast.info(responseResult.msg);
+            this.msg = responseResult.msg || this.resultList.msg;
+          }
+        })
+        .catch((err) => {
+          //关闭loading
+          this.requestResultStatus = PAY_RESULT_STATUS.PAY_RESULT_ERROR;
+          this.isloadingShow = false;
+          this.msg = this.resultList.msg;
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 

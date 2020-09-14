@@ -254,7 +254,7 @@ export default {
     //提交支付金额备注等信息去支付页面
     async fetchRequestPayAmount() {
       axios
-        .post("/scenefront/tran/paymentquery", {
+        .post("/tran/applyqrcode", {
           merId: this.$route.query.merId,
           termId: this.$route.query.termId,
           tranAmt: this.moneyVal,
