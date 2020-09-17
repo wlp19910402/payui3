@@ -5,8 +5,7 @@
         :class="'qm-pay-result ' + resultList.icon"
         :style="{ borderColor: resultList.color }"
         v-if="requestResultStatus !== PAY_RESULT_STATUS.PAY_WAIT"
-      >
-      </div>
+      ></div>
       <div
         v-if="requestResultStatus === PAY_RESULT_STATUS.PAY_WAIT"
         class="qm-wait-loading-box my-3"
@@ -83,8 +82,10 @@ export default {
   methods: {
     //提交支付金额备注等信息去支付页面
     async fetchRequestPayResult() {
+      let appSrc =
+        process.env.NODE_ENV === "production" ? process.env.VUE_APP_SRC : "/";
       axios
-        .post("/tran/paymentquery", {
+        .post(appSrc + "tran/paymentquery", {
           merId: this.$route.query.merId,
           termId: this.$route.query.termId,
           oldLocalOrderNo: this.$route.query.oldLocalOrderNo,
