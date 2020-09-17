@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <div
+    <!-- <div
       class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-6"
     >
       <md-notice-bar mode="closable" icon="volumn" scrollable>
         为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码
       </md-notice-bar>
-    </div>
+    </div> -->
     <img class="qm-logo" :src="logo" />
     <div class="md-example-child md-example-child-input-item-3 section">
       <md-field title="支付金额(元)">
@@ -101,6 +101,7 @@ import "@/assets/styl/payAmount.styl";
 import logo from "@/assets/images/logo-vertial.png";
 import QmSelector from "@/components/form/QmSelector";
 import axios from "axios";
+import formNote from "@/assets/plugins/formNote.json";
 export default {
   name: "app",
   data() {
@@ -166,32 +167,33 @@ export default {
   },
   async created() {
     //获取static中的form表单的数据，备注一，备注二，备注三
-    await axios
-      .get("/static/formNote.json")
-      .then((res) => {
-        let result = res.data;
-        if (result.status === "0") {
-          this.formData = result.formList;
-          for (let i = 0; i < this.formData.length; i++) {
-            //判断url路径是否有备注名字的参数，如果有参数的名字这些值
-            let tmpRemark = this.$route.query["remark" + (i + 1)];
-            if (tmpRemark) {
-              this.formData[i].label = tmpRemark;
-              this.formData[i].placeholder = "请输入" + tmpRemark;
-            }
-          }
-          this.formData.forEach((item) => {
-            item.name;
-          });
-        } else {
-          console.log("获取数据失败", result.msg);
-        }
-      })
-      .catch((err) => {
-        //关闭loading
-        Toast.info("请求表单失败，请重试");
-        console.log(err);
-      });
+    // await axios
+    //   .get("/static/formNote.json")
+    //   .then((res) => {
+    //     let result = res.data;
+    //     if (result.status === "0") {
+
+    //     } else {
+    //       console.log("获取数据失败", result.msg);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     //关闭loading
+    //     Toast.info("请求表单失败，请重试");
+    //     console.log(err);
+    //   });
+    this.formData = formNote.formList;
+    for (let i = 0; i < this.formData.length; i++) {
+      //判断url路径是否有备注名字的参数，如果有参数的名字这些值
+      let tmpRemark = this.$route.query["remark" + (i + 1)];
+      if (tmpRemark) {
+        this.formData[i].label = tmpRemark;
+        this.formData[i].placeholder = "请输入" + tmpRemark;
+      }
+    }
+    this.formData.forEach((item) => {
+      item.name;
+    });
   },
   methods: {
     //显示确认支付的弹出框

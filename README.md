@@ -24,3 +24,9 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 http://localhost:8081/?merId=2222222&termId=222222222
+
+
+
+# 打包的路径
+VUE_APP_SRC=/hl/web/test/byt/
+VUE_APP_SRC=/a/

@@ -1,0 +1,26 @@
+{
+  "status": "0",
+  "msg": "",
+  "formList": [{
+    "type": "input",
+    "label": "备注一",
+    "placeholder": "请输入备注一",
+    "id": "1",
+    "name": "remark1",
+    "value": ""
+  }, {
+    "type": "input",
+    "label": "备注二",
+    "placeholder": "请输入备注二",
+    "id": "2",
+    "name": "remark2",
+    "value": ""
+  }, {
+    "type": "input",
+    "label": "备注三",
+    "placeholder": "请输入备注三",
+    "id": "3",
+    "name": "remark3",
+    "value": ""
+  }]
+}
