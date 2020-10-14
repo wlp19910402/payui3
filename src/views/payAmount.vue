@@ -255,10 +255,10 @@ export default {
     },
     //提交支付金额备注等信息去支付页面
     async fetchRequestPayAmount() {
-      let appSrc =
-        process.env.NODE_ENV === "production" ? process.env.VUE_APP_SRC : "/";
+      // let appSrc =
+      //   process.env.NODE_ENV === "production" ? process.env.VUE_APP_SRC : "/";
       axios
-        .post(appSrc + "tran/applyqrcode", {
+        .post("tran/applyqrcode", {
           merId: this.$route.query.merId,
           termId: this.$route.query.termId,
           tranAmt: this.moneyVal,

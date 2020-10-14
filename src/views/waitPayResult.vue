@@ -82,10 +82,10 @@ export default {
   methods: {
     //提交支付金额备注等信息去支付页面
     async fetchRequestPayResult() {
-      let appSrc =
-        process.env.NODE_ENV === "production" ? process.env.VUE_APP_SRC : "/";
+      // let appSrc =
+      //   process.env.NODE_ENV === "production" ? process.env.VUE_APP_SRC : "/";
       axios
-        .post(appSrc + "tran/paymentquery", {
+        .post("tran/paymentquery", {
           merId: this.$route.query.merId,
           termId: this.$route.query.termId,
           oldLocalOrderNo: this.$route.query.oldLocalOrderNo,

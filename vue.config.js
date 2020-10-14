@@ -56,6 +56,6 @@ module.exports = {
   //默认'/'，部署应用包时的基本 URL  history 本地使用默认值 '/'
   //注：在本地一定要用 '/'，否则二级路由刷新找不到js路径
   //IS_PROD是判断是否为现上环境，可自行配置，process.env.VUE_APP_SRC为线上环境的某个路径。
-  publicPath: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_SRC : '/',
-
+  publicPath: './'
+  // publicPath: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_SRC : '/',
 }
