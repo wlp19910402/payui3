@@ -79,7 +79,6 @@ import {
 } from "mand-mobile";
 import "@/assets/styl/payAmount.styl";
 import logo from "@/assets/images/logo-vertial.png";
-// import QmSelector from "@/components/form/QmSelector";
 import axios from "axios";
 import formNote from "@/assets/plugins/formNote.json";
 export default {
